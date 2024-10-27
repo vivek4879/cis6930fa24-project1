@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 spacy = "*"
+de_core_news_sm = { file = 'https://github.com/explosion/spacy-models/releases/download/de_core_news_sm-2.0.0/de_core_news_sm-2.0.0.tar.gz' }
 pip = "*"
 requests = "*"
 pytest = "*"
@@ -13,4 +14,4 @@ pytest-mock = "*"
 [dev-packages]
 
 [requires]
-python_version = "3.10"
+python_version = "3.12"
