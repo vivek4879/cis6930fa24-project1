@@ -1,1 +1,0 @@
-﻿This is a test file to see if I can extract this text from this file as it is.
