@@ -1,6 +1,8 @@
 import sys
+import os
 from unittest import mock
 from input_read import input_read
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Expected values for testing
 expected_input_files = ['test_file.txt', 'test_file1.txt', 'vaher-names-in.txt', 'vaher-flagtype1-in.txt']
