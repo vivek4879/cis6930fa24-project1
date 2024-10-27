@@ -1,4 +1,4 @@
-#!/Users/vivekaher/Desktop/Projects/cis6930fa24-project1/venv/bin/python3.10
+#!/Users/vivekaher/Desktop/Projects/cis6930fa24-project1/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
