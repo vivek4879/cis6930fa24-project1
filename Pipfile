@@ -6,8 +6,11 @@ name = "pypi"
 [packages]
 spacy = "*"
 pip = "*"
-
+requests = "*"
+pytest = "*"
+mocker = "*"
+pytest-mock = "*"
 [dev-packages]
 
 [requires]
-python_version = "3.13"
+python_version = "3.10"
