@@ -85,6 +85,5 @@ npm-debug.log*
 .env
 .env.local
 
-files/
-stats/
+
 text_concept.txt

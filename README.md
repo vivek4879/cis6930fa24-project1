@@ -115,3 +115,129 @@ pipenv run python redactor.py --input '*.txt' --names --dates --phones --output 
 
 ```
 
+### Functions
+
+## Function: `redact(file_path, start_index, end_index)`
+
+This function performs redaction on a text file by replacing a section of the text (from `start_index` to `end_index`) with the character '█'. It reads the file, processes it by splitting and joining the words to handle formatting, and then overwrites the file with the redacted content.
+
+- **Parameters**:
+  - `file_path`: The path of the file to be redacted.
+  - `start_index`: The start index of the portion to be redacted.
+  - `end_index`: The end index of the portion to be redacted.
+
+---
+
+## Function: `write_stats_to_file(stats_folder_path, stats_file_name, redaction_stats, redaction_dict)`
+
+This function writes the redaction statistics and details into a file located in the specified `stats_folder_path`. It records the total number of redacted characters for each file and detailed information about each redaction (like entity, start, and end positions).
+
+- **Parameters**:
+  - `stats_folder_path`: Directory where the stats file will be saved.
+  - `stats_file_name`: Name of the stats file.
+  - `redaction_stats`: Dictionary storing the total number of redacted characters for each file.
+  - `redaction_dict`: Dictionary storing detailed information about each redaction.
+
+---
+
+## Function: `redact_from_db(cur, output_path, stats_file_name, redaction_dict)`
+
+This function processes redactions from the database and applies them to files. It fetches redaction data (file name, start, and end indices) from the database, processes the corresponding files, and performs the redactions. It also creates an output directory if it doesn't exist and ensures redacted files are saved with a `.txt` extension. Additionally, it writes the redaction statistics into a stats file.
+
+- **Parameters**:
+  - `cur`: Database cursor used to fetch redaction data.
+  - `output_path`: Path to the folder where the redacted files will be stored.
+  - `stats_file_name`: Name of the file where redaction stats will be saved.
+  - `redaction_dict`: Dictionary storing detailed information about each redaction.
+
+---
+
+### Key Points:
+- **Redaction Process**: Applies redactions to specific portions of text within files and saves the redacted versions.
+- **Statistics**: Tracks the total number of characters redacted and detailed information about each redaction.
+- **File Management**: Handles file reading, copying, and saving with redactions in the specified output folder.
+---
+
+## Function: `numbers(cur, file_name, redaction_dict)`
+
+This function scans a file for phone numbers using a regular expression, validates them, and performs redactions by inserting the detected phone numbers into the database and updating a redaction dictionary.
+
+- **Parameters**:
+  - `cur`: The database cursor used to insert redacted data.
+  - `file_name`: The name of the file being processed.
+  - `redaction_dict`: A dictionary that tracks redaction details, including the redacted phone numbers, their positions, and labels.
+
+- **Process**:
+  1. Reads the file content using the `open_file_in_same_directory()` function.
+  2. Uses a regex pattern to identify phone numbers within the text.
+  3. For each valid phone number (using `valid_phone_number()`):
+     - Inserts redaction details (start and end indices) into the database.
+     - Updates the `redaction_dict` with information about the redacted phone numbers (entity, label, start, end).
+
+---
+
+## Function: `valid_phone_number(match)`
+
+This helper function validates a matched phone number by ensuring it contains between 10 and 11 digits. It strips out non-numeric characters (such as spaces, dashes, and dots) and checks the digit count.
+
+- **Parameters**:
+  - `match`: The regex match object containing the phone number.
+
+- **Returns**:
+  - `True` if the phone number contains between 10 and 11 digits; otherwise, `False`.
+
+---
+
+### Key Points:
+- **Phone Number Redaction**: The `numbers()` function scans and redacts valid phone numbers, inserting them into the database and updating the redaction dictionary.
+- **Validation**: The `valid_phone_number()` function ensures that only valid phone numbers (with 10 or 11 digits) are processed.
+
+---
+
+## Function: `open_file_in_same_directory(file_name)`
+
+This function reads the content of a file located in the same directory as the script, removes extra spaces, and returns the cleaned text.
+
+- **Parameters**:
+  - `file_name`: The name of the file to be opened.
+
+- **Process**:
+  1. Determines the directory where the script is located using `os.path.dirname(os.path.abspath(__file__))`.
+  2. Builds the full file path by joining the script's directory and the file name.
+  3. Opens the file in read mode, splits the content into words (to remove extra spaces between words), and then rejoins the words into a single string.
+  4. Returns the cleaned file content as a string.
+
+### Key Points:
+- **File Handling**: Reads a file in the same directory as the script.
+- **Whitespace Handling**: Splits and rejoins words to ensure that excessive spaces are removed from the content.
+
+---
+## Function: `input_read()`
+
+This function reads and parses command-line arguments to extract input file patterns, flags, concepts, output paths, and stats options. It uses `sys.argv` to access the arguments and processes them accordingly.
+
+- **Returns**: A tuple containing:
+  - `input_files`: A list of files matching the provided pattern (using `glob`).
+  - `flags`: A list of flags passed as command-line arguments (e.g., `--names`, `--dates`).
+  - `concepts`: A list of specific concepts to be used (if any).
+  - `stats_`: A list containing stats options (e.g., `stderr` or file names for stats).
+  - `output_path_list`: A list of output paths where redacted files should be stored.
+
+- **Process**:
+  1. Loops through the command-line arguments (`sys.argv`).
+  2. Identifies and captures arguments for:
+     - `--input`: File pattern (e.g., `*.txt`).
+     - `--concept`: Concepts to use in the redaction process.
+     - `--output`: Output directory for saving redacted files.
+     - `--stats`: File or destination for saving redaction statistics.
+     - Other flags (e.g., `--names`, `--dates`), which are stored in `flags`.
+  3. Uses `glob.glob()` to find files matching the input pattern.
+  4. Returns the parsed input, flags, and paths.
+
+### Key Points:
+- **Command-Line Parsing**: Reads and interprets arguments from the command line.
+- **File Pattern Matching**: Uses `glob` to match input files based on the pattern provided via `--input`.
+- **Flexible Arguments**: Supports multiple types of input including flags, concepts, and output paths.
+
+---
+

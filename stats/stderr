@@ -1,0 +1,9 @@
+text_concept.txt: 559 characters redacted
+Details of redactions in text_concept.txt:
+  Redaction Type: DATE
+    Entity: just one year, Start: 796, End: 809
+    Entity: the next three years, Start: 891, End: 911
+  Redaction Type: CONCEPT
+    Entity: That was the promise of zero-coupon convertible bonds, and companies from Enron to Merrill Lynch binged on what seemed like free money., Start: 158, End: 293
+    Entity: That's because investors bought the bonds in the hope of converting them into equity--if the stock tanked, the bonds would no longer be worth converting., Start: 418, End: 571
+    Entity: So to make them more attractive to buyers, companies had to build in an escape hatch: If the stock price failed to rise sufficiently, investors could "put" (that is, sell) the bonds back to the company--in many cases, after just one year., Start: 572, End: 810
