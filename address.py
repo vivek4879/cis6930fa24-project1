@@ -4,7 +4,6 @@ from open_file import open_file_in_same_directory
 
 def address(cur,file_name):
     # Load the file content
-    # file_name = "vaher-names1-in"
     text = open_file_in_same_directory(file_name)
 
     # Initialize SpaCy and Matcher
@@ -42,7 +41,7 @@ def address(cur,file_name):
     matches = matcher(doc)
     for match_id, start, end in matches:
         m_span = doc[start:end]  # Extract the matched span from the document
-        print(m_span, start, end)
+        # print(m_span, start, end)
 
         # Insertion into the database
         insertion_query = "INSERT INTO redactions(File_name, start_index, end_index) VALUES (?,?,?)"

@@ -7,6 +7,8 @@ def input_read():
     flags = []
     concepts = []
     stats_ = []
+    output_path_list = []
+    
 
     for i in range (len(arguments_received)):
         if arguments_received[i] == '--input':
@@ -14,7 +16,7 @@ def input_read():
         elif arguments_received[i] == '--concept':
             concepts.append(arguments_received[i+1])
         elif arguments_received[i] == '--output':
-            output_path = arguments_received[i+1]
+            output_path_list.append(arguments_received[i+1])
         elif arguments_received[i] == '--stats':
             stats_.append(arguments_received[i+1])
         elif arguments_received[i].startswith('--'):
@@ -22,5 +24,4 @@ def input_read():
         
 
     input_files = glob.glob(glob_received)
-    return (input_files, flags,concepts,stats_)
-
+    return (input_files, flags,concepts,stats_,output_path_list)

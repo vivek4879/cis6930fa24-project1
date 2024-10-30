@@ -84,3 +84,7 @@ npm-debug.log*
 # Specific to environment settings
 .env
 .env.local
+
+files/
+stats/
+text_concept.txt
