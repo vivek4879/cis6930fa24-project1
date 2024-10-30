@@ -1,6 +1,6 @@
 import pytest
 from unittest import mock
-from open_file import open_file_in_same_directory  # Replace 'your_module' with the actual module name
+from open_file import open_file_in_same_directory  
 
 # Test for open_file_in_same_directory
 @mock.patch('builtins.open', new_callable=mock.mock_open, read_data="This is    a test    file.")
