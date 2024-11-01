@@ -33,7 +33,7 @@ for file in input_files:
             if flag == 'phones':
                 numbers(cur,file,redaction_dict)
             if flag == 'address':
-                address(cur,file)
+                address(cur,file,redaction_dict)
     if len(concepts) > 0:
         for concept in concepts:
             find_concept(cur,file, concept, redaction_dict,threshold=0.6)

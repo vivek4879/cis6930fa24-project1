@@ -117,14 +117,13 @@ pipenv run python redactor.py --input '*.txt' --names --dates --phones --output 
 
 ### Functions
 
-## Function: `redact(file_path, start_index, end_index)`
+## Function: `redact_text(text, redactions)`
 
-This function performs redaction on a text file by replacing a section of the text (from `start_index` to `end_index`) with the character '█'. It reads the file, processes it by splitting and joining the words to handle formatting, and then overwrites the file with the redacted content.
+This function performs the core redaction by replacing sensitive text within the specified indices with a redaction character (█). The function sorts the redaction indices in reverse order to ensure that each redaction does not shift the indices of others.
 
 - **Parameters**:
-  - `file_path`: The path of the file to be redacted.
-  - `start_index`: The start index of the portion to be redacted.
-  - `end_index`: The end index of the portion to be redacted.
+  - `text (str)`: The original text where redactions will be applied.
+  - `redactions (list of tuples)`: A list of (start_index, end_index) tuples representing the ranges to redact.
 
 ---
 
@@ -142,7 +141,7 @@ This function writes the redaction statistics and details into a file located in
 
 ## Function: `redact_from_db(cur, output_path, stats_file_name, redaction_dict)`
 
-This function processes redactions from the database and applies them to files. It fetches redaction data (file name, start, and end indices) from the database, processes the corresponding files, and performs the redactions. It also creates an output directory if it doesn't exist and ensures redacted files are saved with a `.txt` extension. Additionally, it writes the redaction statistics into a stats file.
+This function processes redactions from the database and applies them to files. It fetches redaction data (file name, start, and end indices) from the database, processes the corresponding files, and performs the redactions. It also creates an output directory if it doesn't exist and ensures redacted files are saved with a .censored extension. Additionally, it writes the redaction statistics into a stats file.
 
 - **Parameters**:
   - `cur`: Database cursor used to fetch redaction data.

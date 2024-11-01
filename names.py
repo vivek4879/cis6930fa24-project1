@@ -5,7 +5,7 @@ import sqlite3
 def names(cur, file_name, redaction_dict):
     text = open_file_in_same_directory(file_name)
     # Load the small English language model
-    nlp = spacy.load("en_core_web_sm")
+    nlp = spacy.load("en_core_web_lg")
 
     doc = nlp(''.join(text))
 
