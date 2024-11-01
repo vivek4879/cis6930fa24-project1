@@ -73,7 +73,7 @@ Dates: Detected using regular expressions and SpaCy's date recognition.
 Phone Numbers: Detected using a combination of regular expressions.
 Addresses: Detected using regex patterns for common address structures.
 Concepts: Sentences with words or themes related to the given concept are redacted using SpaCy's word vector similarity.
-Whitespace between censored words is not redacted by default, but this can be customized if needed.
+Whitespace between censored words is redacted by default, but this can be customized if needed.
 
 
 ### Redaction Statistics
