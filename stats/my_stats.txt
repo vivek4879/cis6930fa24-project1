@@ -1,0 +1,15 @@
+text_concept.txt: 186 characters redacted
+Details of redactions in text_concept.txt:
+  Redaction Type: PERSON
+    Entity: Rick Causey's, Start: 1421, End: 1434
+    Entity: Philippe Bibi CTO, Start: 1942, End: 1959
+  Redaction Type: DATE
+    Entity: December 31, Start: 116, End: 127
+    Entity: January 6, 2000, Start: 360, End: 375
+    Entity: Thursday December 30, 1999 @ 6:00pm, Start: 822, End: 857
+    Entity: January 5, 2000, Start: 866, End: 881
+    Entity: Tuesday December 28, 1999, Start: 934, End: 959
+    Entity: January 5, 2000, Start: 985, End: 1000
+    Entity: December 16, 1999:, Start: 1448, End: 1466
+    Entity: the millennium weekend, Start: 1747, End: 1769
+  Redaction Type: ADDRESS

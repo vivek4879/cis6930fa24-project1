@@ -82,6 +82,8 @@ The --stats flag allows for outputting statistics related to the redaction proce
 Types of Redacted Items: A count of each type of redaction (names, dates, phone numbers, addresses, concepts).
 Details of Redacted Items: Includes the redacted term, the type, and the start and end indices of the redacted term within the text.
 
+The redaction stats and details are written either to a file, stderr, or stdout depending on the type given in the input. If the input says stderr or stdout then we print it to the terminal and if it says anything else then we make a .txt file of that name in our stats folder and write the stats in that file.
+
 ### Tests
 Tests for each feature are provided in the tests/ directory. To run all tests, use:
 

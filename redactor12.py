@@ -1,15 +1,11 @@
-import sqlite3
+import sys
 import os
+import sqlite3
 from collections import defaultdict
 
 def redact_text(text, redactions):
     """
     Apply multiple redactions to the text based on start and end indices.
-    Args:
-    - text (str): The input text to redact.
-    - redactions (list of tuples): List of (start_index, end_index) for redactions.
-    Returns:
-    - str: Redacted text.
     """
     # Sort redactions in reverse order to avoid affecting subsequent indices
     redactions = sorted(redactions, key=lambda x: x[0], reverse=True)
@@ -66,7 +62,7 @@ def redact_from_db(cur, output_path, stats_file_name, redaction_dict):
             os.makedirs(stats_folder_path)
             print(f"'Stats' directory created at: {stats_folder_path}")
 
-        # Write stats to file
+        # Write stats to file or terminal
         write_stats_to_file(stats_folder_path, stats_file_name, redaction_stats, redaction_dict)
 
     except sqlite3.Error as e:
@@ -74,9 +70,12 @@ def redact_from_db(cur, output_path, stats_file_name, redaction_dict):
     except Exception as e:
         print(f"Error: {e}")
 
+import sys
+import os
+
 def write_stats_to_file(stats_folder_path, stats_file_name, redaction_stats, redaction_dict):
     """
-    Writes redaction stats and details to a file.
+    Writes redaction stats and details either to a file, stderr, or stdout.
     
     Args:
     - stats_folder_path: The folder path where the stats file should be saved.
@@ -84,8 +83,19 @@ def write_stats_to_file(stats_folder_path, stats_file_name, redaction_stats, red
     - redaction_stats: Dictionary storing the total number of redacted characters per file.
     - redaction_dict: Dictionary storing the detailed redaction information.
     """
-    stats_file_path = os.path.join(stats_folder_path, stats_file_name)
-    with open(stats_file_path, "w") as stats_file:
+    # Ensure the stats file has a .txt extension if writing to a file
+    if stats_file_name.lower() not in ("stderr", "stdout"):
+        if not stats_file_name.endswith(".txt"):
+            stats_file_name += ".txt"
+        stats_file_path = os.path.join(stats_folder_path, stats_file_name)
+        output = open(stats_file_path, "w")
+        print(f"Redaction stats saved to: {stats_file_path}")
+    else:
+        # Output to stderr or stdout if specified
+        output = sys.stderr if stats_file_name.lower() == "stderr" else sys.stdout
+
+    # Writing redaction statistics to the designated output
+    with output as stats_file:
         for file_name, total_redacted_chars in redaction_stats.items():
             stats_file.write(f"{file_name}: {total_redacted_chars} characters redacted\n")
             
@@ -101,4 +111,6 @@ def write_stats_to_file(stats_folder_path, stats_file_name, redaction_stats, red
             else:
                 stats_file.write(f"No redaction details found for {file_name}.\n")
 
-    print(f"Redaction stats saved to: {stats_file_path}")
+    # If output was a file, close it explicitly
+    if output not in (sys.stdout, sys.stderr):
+        output.close()
