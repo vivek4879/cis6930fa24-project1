@@ -1,5 +1,7 @@
 # README
 
+# Vivek Milind Aher
+
 ## Project: The Redactor
 
 **Course**: CIS 6930, Fall 2024  
